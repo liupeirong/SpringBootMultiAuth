@@ -15,7 +15,7 @@ java -jar multiauth-1.0-SNAPSHOT.jar --spring.profiles.active=basicauth
 -DskipTests -Dspring-boot.run.profiles=basicauth spring-boot:run 
 ```
 
-![Alt text](IntelliJRunConfig.PNG?raw=true "IntelliJ Maven Run Config") 
+![Alt text](IntelliJRunConfig.GIF?raw=true "IntelliJ Maven Run Config") 
 
 ### To run Azure AD profile:
 1. [configure an Azure application](https://docs.microsoft.com/en-us/azure/active-directory/develop/v1-protocols-oauth-code#register-your-application-with-your-ad-tenant). Set the values in [application-aad.properties](src/main/resources/application-aad.properties).
