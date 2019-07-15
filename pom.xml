@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.summer</groupId>
-    <artifactId>storage</artifactId>
+    <artifactId>multiauth</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
