@@ -18,9 +18,10 @@ java -jar multiauth-1.0-SNAPSHOT.jar --spring.profiles.active=basicauth
 ![Alt text](IntelliJRunConfig.GIF?raw=true "IntelliJ Maven Run Config") 
 
 ### To run the Azure AD profile:
-1. [Configure an Azure application](https://docs.microsoft.com/en-us/azure/active-directory/develop/v1-protocols-oauth-code#register-your-application-with-your-ad-tenant). Set the configuration values in [application-aad.properties](src/main/resources/application-aad.properties).
-2. Create groups, users, and add users to groups as documented [here](https://docs.microsoft.com/en-us/azure/active-directory/fundamentals/active-directory-groups-create-azure-portal).
-3. To run the application:
+1. [Configure an Azure application](https://docs.microsoft.com/en-us/azure/active-directory/develop/v1-protocols-oauth-code#register-your-application-with-your-ad-tenant). The default Redirect URI for localhost testing should be set to *http<nolink>://localhost:8080/login/oauth2/code/azure*.  
+2. Once the app is registered, set the configuration values in [application-aad.properties](src/main/resources/application-aad.properties).
+3. Create groups, users, and add users to groups as documented [here](https://docs.microsoft.com/en-us/azure/active-directory/fundamentals/active-directory-groups-create-azure-portal).
+4. To run the application:
   *  to run in command line:
 ```bash
 cd $project_root
@@ -34,7 +35,7 @@ java -jar multiauth-1.0-SNAPSHOT.jar --spring.profiles.active=aad
 ```
 
 ### To verify authentication and authorization are set up properly
-Go to *http<nolink>://localhost:8080*, you will see the swagger UI for the HelloController.  If you log in as a user belonging to the ADMIN group in Azure AD, you can run the ```calc``` api that adds two numbers. If you only belong to the VIEWER group in Azure AD, you can run the ```hello``` api, but the ```calc``` api will return 403 forbidden. 
+Go to *http<nolink>://localhost:8080*, you will be asked to log in to see the swagger UI for the HelloController.  If you log in as a user belonging to the ADMIN group, you can run the ```calc``` api that adds two numbers. If you only belong to the VIEWER group, you can run the ```hello``` api, but the ```calc``` api will return 403 forbidden. 
 
 Access *http<nolink>://localhost:8080/whoami* to see the user principal information.
 
@@ -48,7 +49,9 @@ Logout controller isn't implemented yet. The default Spring Boot ```/logout``` d
 
 ### Troubleshooting
 * If you get an error ```AADSTS240002: Input id_token cannot be used as 'urn:ietf:params:oauth:grant-type:jwt-bearer' grant```, make sure to set ```oauth2AllowIdTokenImplicitFlow``` in the registered Azure AD app manifest to ```true```.
-* If you get 403 even when signed in as a user belonging to the ADMIN group, make sure csrf is disabled in your ```WebSecurityConfigurerAdapter``` - ```http.csrf().disable()```.
+* If you get 403 even when signed in as a user belonging to the ADMIN group, make sure 
+  *  You have consented to allow the app to read your Azure AD groups. This permission requires admin consent. 
+  *  csrf is disabled in your ```WebSecurityConfigurerAdapter``` - ```http.csrf().disable()```.
 * If your ```application-${profile}.properties``` file is in a custom location, you can specify in the java command line ```--spring.config.location=/path/to/configdir/```. Or in maven run config ```-Dspring.config.location=file:///C:/path/to/configdir/```.
 * If the application can't find the ```application-${profile}.properties```, you may encounter many strange errors.
 * If Spring Security is on the classpath, by default Spring Boot automatically secures all HTTP endpoints with basic auth without any code telling it to do so. 
