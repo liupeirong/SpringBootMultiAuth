@@ -52,7 +52,7 @@ Logout controller isn't implemented yet. The default Spring Boot ```/logout``` d
 * If you get 403 even when signed in as a user belonging to the ADMIN group, make sure 
   *  You have consented to allow the app to read your Azure AD groups. This permission requires admin consent. 
   *  csrf is disabled in your ```WebSecurityConfigurerAdapter``` - ```http.csrf().disable()```.
-* If your ```application-${profile}.properties``` file is in a custom location, you can specify in the java command line ```--spring.config.location=/path/to/configdir/```. Or in maven run config ```-Dspring.config.location=file:///C:/path/to/configdir/```.
+* If your ```application-${profile}.properties``` file is in a custom location, you can specify in the java command line ```--spring.config.location=/path/to/configdir/```. Or in maven run config ```-Dspring.config.location=file:///C:/path/to/configdir/```, or ```-Dspring-boot.run.arguments=--spring.config.location=file:///C:/path/to/configdir/```.
 * If the application can't find the ```application-${profile}.properties```, you may encounter many strange errors.
 * If Spring Security is on the classpath, by default Spring Boot automatically secures all HTTP endpoints with basic auth without any code telling it to do so. 
 * If Swagger UI doesn't list any controllers or APIs, make sure to ```ComponentScan``` the [root package](src/main/java/org/summer/App.java#L10) of your app. 
